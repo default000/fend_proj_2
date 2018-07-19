@@ -22,6 +22,7 @@ body {
 }
 
 .container {
+    z-index:100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,8 +66,12 @@ h1 {
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
+.deck .card.flipped {
+    box-shadow: -5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
 .deck .card.open {
-    transform: rotateY(0);
+    /*transform: rotateY(45deg);*/
     background: #02b3e4;
     cursor: default;
 }
@@ -79,6 +84,76 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+
+    animation-name: match;
+    animation-duration: 1s;
+}
+
+@keyframes match {
+    20% {
+    transform: scaleX(1.2) scaleY(0.8);
+    }
+
+    40% {
+    transform: scaleX(0.8) scaleY(1.2);
+    }
+
+    60% {
+    transform: scaleX(1.12) scaleY(0.88);
+    }
+
+    80% {
+    transform: scaleX(0.88) scaleY(1.12);
+    }
+
+    100% {
+    transform: scaleX(1) scaleY(1);
+    }
+}
+
+.deck .card.wrong {
+    cursor: default;
+    background: #ff4949;
+    font-size: 33px;
+
+    animation-name: wrong;
+    animation-duration: 1s;
+}
+
+@keyframes wrong {
+    20% {
+    transform: rotate(-5deg) translateX(-15px);
+    }
+
+    40% {
+    transform: rotate(5deg) translateX(15px);
+    }
+
+    60% {
+    transform: rotate(-2.5deg) translateX(-7.5px);
+    }
+
+    80% {
+    transform: rotate(2.5deg) translateX(7.5px);
+    }
+
+    100% {
+    transform: rotate(0) translateX(0);
+    }
+}
+
+.rotate {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -webkit-transition-property: transform -webkit-transform;
+    -webkit-transition-duration: 0.5s;
+    transition-property: transform -webkit-transform;
+    transition-duration: 0.5s;
+}
+
+.flipped-icon {
+    position: absolute;
+    transform: rotateY(-180deg);
 }
 
 /*
@@ -91,7 +166,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .ds {
     margin: 0;
     padding: 0;
     display: inline-block;
@@ -105,5 +180,58 @@ h1 {
 
 .score-panel .restart {
     float: right;
+    cursor: pointer;
+}
+
+.timer {
+    text-align: center;
+    padding-left: 30%;
+}
+
+/*
+ * Modal styles
+ */
+
+.modal {
+    z-index:101;
+    visibility: hidden;
+    background-color: #ffffff;
+    align-content: center;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0s 0.5s;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal.active {
+
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s;
+}
+
+.check {
+    font-size: 66px;
+    color: #42f47d;
+}
+
+.play-again {
+    background-color: #42f47d;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 4px;
     cursor: pointer;
 }
